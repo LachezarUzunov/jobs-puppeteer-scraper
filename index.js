@@ -26,7 +26,9 @@ async function main() {
         const title = $(titleEl).text();
         const linkEl = $(element).find('.black-link-b');
         const link = $(linkEl).attr('href');
-        return { title, link };
+        const employerEl = $(element).find('.secondary-text');
+        const employer = $(employerEl).text();
+        return { title, link, employer };
     }).get();
     
   
