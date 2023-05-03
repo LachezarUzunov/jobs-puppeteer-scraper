@@ -8,17 +8,36 @@ async function main() {
 
     const html = await page.content();
     const $ = cheerio.load(html);
-    const elements = [];
+    const titles = [];
+    const links = []
+    // $('.card-title > span:last-of-type').each((index, element) => {
+    //     const title = $(element).text();
+    //     titles.push({ title });
+    // })
 
-    $('.card-title > span:last-of-type').each((index, element) => {
-        console.log($(element).text())
-    })
+    // $(".black-link-b").each((index, element) => {
+    //     const link = $(element).attr('href');
+    //     links.push({ link });
+       
+    // })
+
+    const results = $('.scroll-item').map((index, element) => {
+        const titleEl = $(element).find('.card-title > span:last-of-type');
+        const title = $(titleEl).text();
+        const linkEl = $(element).find('.black-link-b');
+        const link = $(linkEl).attr('href');
+        return { title, link };
+    }).get();
+    
+  
 
     // $(".titlestring").each((index, element) => {
     //     console.log($(element).attr("href"))
     // })
-
-    console.log(elements);
+// const data = titles.map((t, i) => {
+//     return {title: t.title, link: links[i].link}
+// })
+    console.log(results);
 }
 
 
