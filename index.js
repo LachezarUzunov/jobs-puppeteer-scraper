@@ -21,7 +21,7 @@ async function scrapeListings(page) {
 }
 
 async function scrapeJobDescriptions(listings, page) {
-    for (let i = 0; i < listings.length; i++) {
+    for (let i = 0; i < 10; i++) {
         await page.goto(listings[i].link)
         const html = await page.content();
         const $ = cheerio.load(html);
@@ -29,9 +29,12 @@ async function scrapeJobDescriptions(listings, page) {
         const date = $(dateDiv).text();
         const ul = $('.options > ul > li:first-child > span');
         const workPlace = $(ul).text();
-        console.log(workPlace);
+     
+      listings[i].workPlace = workPlace;
         await sleep(1000)
     }
+
+    return listings;
 }
 
 async function sleep(miliseconds) {
@@ -43,6 +46,7 @@ async function main() {
     const page = await browser.newPage();
     const listings = await scrapeListings(page);
     const listingsWithJobDescriptions = await scrapeJobDescriptions(listings, page)
+    console.log(listingsWithJobDescriptions)
 }
 
 main();
